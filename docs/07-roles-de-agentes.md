@@ -1,84 +1,97 @@
 # 07 — Roles de agentes
 
-Cada rol tiene un trabajo, un input, un output y un criterio de “hecho”.
+Cada rol tiene misión, input, output y criterio de “hecho”.
 
-## Spec Writer
+## Orquestador (sistema)
 
 | | |
 |--|--|
-| **Misión** | Convertir un pedido/bug en especificación ejecutable |
-| **Consulta** | Cerebro (siempre) |
+| **Misión** | Coordinar cola, estados y handoffs |
+| **Output** | estado de tarea + artefactos enlazados |
+| **Hecho cuando** | la tarea avanza sin saltarse pasos |
+
+Puede ser código + workflow; no tiene por qué ser un LLM.
+
+## Agente de especificación
+
+| | |
+|--|--|
+| **Misión** | Convertir petición/bug/ticket en spec ejecutable |
+| **Consulta** | Cerebro |
 | **Output** | `specs/<task_id>.md` |
-| **Hecho cuando** | hay alcance, no-alcance, criterios de aceptación y tests esperados |
+| **Hecho cuando** | hay criterios de aceptación claros |
 
 No escribe código de producto.
 
-## Builder
+## Agente planificador
 
 | | |
 |--|--|
-| **Misión** | Implementar la spec con TDD |
-| **Consulta** | Cerebro + spec |
-| **Output** | commits en rama + tests + PR |
-| **Hecho cuando** | CI verde y todos los ítems de la spec cubiertos |
+| **Misión** | Partir la spec en tareas T1, T2, T3… |
+| **Input** | spec |
+| **Output** | `plans/<task_id>.md` |
+| **Hecho cuando** | cada tarea es implementable y verificable |
+
+## Agente desarrollador
+
+| | |
+|--|--|
+| **Misión** | Implementar el plan en una rama |
+| **Input** | spec + plan + cerebro |
+| **Output** | commits + rama `feature/...` |
+| **Hecho cuando** | el plan está cubierto y el pack listo para review |
 
 No decide arquitectura nueva sin ADR.
+
+## Revisor de lógica
+
+| | |
+|--|--|
+| **Misión** | Validar corrección funcional y casos límite |
+| **Contexto** | limpio |
+| **Output** | `PASS/FAIL` + hallazgos |
 
 ## Revisor de seguridad
 
 | | |
 |--|--|
-| **Misión** | Encontrar riesgos de seguridad en el diff |
-| **Contexto** | Limpio (solo diff + estándares de seguridad del cerebro) |
+| **Misión** | Detectar riesgos de seguridad |
+| **Contexto** | limpio |
 | **Output** | `PASS/FAIL` + hallazgos priorizados |
 
-## Revisor de UX
+## Revisor de rendimiento
 
 | | |
 |--|--|
-| **Misión** | Validar flujo y claridad para el usuario objetivo |
-| **Contexto** | Limpio + avatar/personas del cerebro |
-| **Output** | `PASS/FAIL` + fricciones detectadas |
+| **Misión** | Detectar regresiones de coste/latencia/escala |
+| **Contexto** | limpio |
+| **Output** | `PASS/FAIL` + hallazgos |
 
-## Revisor de UI
-
-| | |
-|--|--|
-| **Misión** | Validar consistencia visual y estados de interfaz |
-| **Contexto** | Limpio + design tokens / reglas UI |
-| **Output** | `PASS/FAIL` + lista de inconsistencias |
-
-## Revisor de código
+## Agente de pruebas
 
 | | |
 |--|--|
-| **Misión** | Cumplir arquitectura, estilo y calidad |
-| **Contexto** | Limpio + estándares del cerebro |
-| **Output** | `PASS/FAIL` + comentarios accionables |
+| **Misión** | Validar con escenarios reales, lint y CI |
+| **Importante** | **distinto** del desarrollador |
+| **Output** | informe de pruebas + estado CI |
 
-## Aprobador
+Si el mismo agente escribe código y tests sin contraste, se autojustifica.
 
-| | |
-|--|--|
-| **Misión** | Consolidar reviews y decidir |
-| **Input** | 4 reportes |
-| **Output** | `APPROVE` o `SEND_BACK` con lista única de fixes |
-
-## Clasificador de riesgo
+## Clasificador de riesgo / aprobador
 
 | | |
 |--|--|
-| **Misión** | Decidir ruta automática vs humana |
-| **Input** | diff + paths tocados + tipo de tarea |
-| **Output** | `LOW` / `HIGH` + justificación |
+| **Misión** | Decidir auto-ruta vs humano, o reenviar a build |
+| **Input** | reviews + pruebas + paths tocados |
+| **Output** | `LOW` / `HIGH` / `SEND_BACK` |
 
-Debe estar respaldado por **hooks de código** que no se puedan saltar.
+Debe ir acompañado de **hooks de código** en paths críticos.
 
 ---
 
-## Buenas prácticas de prompts por rol
+## Regla de oro de prompts
 
 1. Un rol = un objetivo
-2. Formato de salida estricto (JSON o checklist)
-3. Prohibido inventar archivos no presentes en el diff (para revisores)
-4. Si falta info del cerebro → `BLOCKED` (no improvisar)
+2. Salida estructurada (`PASS|FAIL` + lista)
+3. Si falta info del cerebro → `BLOCKED`
+4. Prohibido inventar archivos no presentes en el diff (revisores)

@@ -1,137 +1,158 @@
 # 05 — Arquitectura del pipeline
 
+## Idea central
+
+Todo gira alrededor de un **orquestador**:
+
+- recibe la entrada
+- encola la tarea
+- mueve estados
+- llama a cada rol
+- guarda trazas
+
+Los agentes no “se organizan solos”: el orquestador coordina.
+
 ## Diagrama general
 
 ```text
 ┌─────────────────────────────────────────────────────────┐
-│                         INPUT                           │
-│  errores prod · issues · tickets · Slack · formularios  │
+│                 INPUT                                   │
+│        petición · bug · ticket                          │
 └───────────────────────────┬─────────────────────────────┘
                             ▼
 ┌─────────────────────────────────────────────────────────┐
-│                    SPEC WRITER                          │
-│         consulta CEREBRO → escribe SPEC                 │
+│                   ORQUESTADOR                           │
+│         cola de tareas · estados · logs                 │
 └───────────────────────────┬─────────────────────────────┘
                             ▼
 ┌─────────────────────────────────────────────────────────┐
-│                       BUILDER                           │
-│   crea rama · TDD · implementa · deja trazas            │
-└───────────────────────────┬─────────────────────────────┘
-                            ▼
-┌──────────────┬──────────────┬──────────────┬────────────┐
-│  Seguridad   │     UX       │     UI       │ Code review│
-│ (ctx limpio) │ (ctx limpio) │ (ctx limpio) │(ctx limpio)│
-└──────┬───────┴──────┬───────┴──────┬───────┴─────┬──────┘
-       └──────────────┴───────┬──────┴─────────────┘
-                              ▼
-┌─────────────────────────────────────────────────────────┐
-│                      APROBADOR                          │
-│   consolida feedback · OK o vuelve al BUILDER           │
+│              AGENTE DE ESPECIFICACIÓN                   │
+│     consulta CEREBRO → criterios de aceptación          │
 └───────────────────────────┬─────────────────────────────┘
                             ▼
 ┌─────────────────────────────────────────────────────────┐
-│               CLASIFICADOR DE RIESGO                    │
-│   bajo → auto merge/deploy   |   alto → humano          │
+│                AGENTE PLANIFICADOR                      │
+│              parte el trabajo en T1 T2 T3…              │
 └───────────────────────────┬─────────────────────────────┘
                             ▼
-                      PRODUCCIÓN
+┌─────────────────────────────────────────────────────────┐
+│              AGENTE DESARROLLADOR                       │
+│         rama feature/… · implementa · commits           │
+└───────────────────────────┬─────────────────────────────┘
+                            ▼
+┌──────────────┬──────────────────┬───────────────────────┐
+│   Lógica     │    Seguridad     │     Rendimiento       │
+│ (paralelo)   │    (paralelo)    │     (paralelo)        │
+└──────┬───────┴────────┬─────────┴──────────┬────────────┘
+       └────────────────┴─────────┬──────────┘
+                                  ▼
+┌─────────────────────────────────────────────────────────┐
+│                 AGENTE DE PRUEBAS                       │
+│        escenarios reales · lint · CI                    │
+└───────────────────────────┬─────────────────────────────┘
+                            ▼
+┌─────────────────────────────────────────────────────────┐
+│              CLASIFICADOR DE RIESGO                     │
+│   bajo → auto   |   alto → humano   |   fail → rewind   │
+└───────────────────────────┬─────────────────────────────┘
+                            ▼
+                     PR / PRODUCCIÓN
 ```
 
-## 1) Input unificado
+## 1) Input
 
-Todo entra por el mismo “puerto”:
-
-- error de monitorización (p. ej. logs/APM)
-- issue de GitHub / ticket
-- mensaje de Slack / formulario
-- tarea lanzada a mano o por voz
-
-Normaliza a un objeto:
+Normaliza siempre a:
 
 ```json
 {
   "task_id": "TASK-1042",
-  "source": "sentry|github|slack|manual",
+  "source": "peticion|bug|ticket",
   "title": "...",
   "body": "...",
-  "priority": "low|medium|high",
-  "created_at": "ISO-8601"
+  "priority": "low|medium|high"
 }
 ```
 
-## 2) Spec Writer
+## 2) Orquestador
 
-No programa. **Planifica**.
+Estados sugeridos:
 
-Antes de escribir:
+`queued → specifying → planning → building → reviewing → testing → waiting_human → done|failed`
 
-1. Lee el input
-2. Consulta el cerebro
-3. Detecta solapes / código existente
-4. Emite una spec con criterios de aceptación y tests esperados
+Responsabilidades:
+
+- no saltarse pasos
+- reintentos controlados
+- paralelizar reviews
+- persistir artefactos de cada fase
+
+## 3) Especificación
+
+Convierte la petición en:
+
+- problema
+- alcance / no-alcance
+- criterios de aceptación
+- riesgos preliminares
 
 Plantilla: [`../plantillas/spec.md`](../plantillas/spec.md)
 
-## 3) Builder
+## 4) Planificación
 
-Implementa la spec:
+Parte la spec en tareas ejecutables:
 
-1. Crea rama `factory/<task_id>-<slug>`
-2. Trabaja con **TDD**:
-   - escribe test
-   - falla
-   - escribe código
-   - pasa
-3. Repite por cada ítem de la spec
-4. Abre PR o deja pack listo para review
+- `T1`, `T2`, `T3`…
+- dependencias entre tareas
+- orden sugerido
+- definición de “done” por tarea
+
+Plantilla: [`../plantillas/plan.md`](../plantillas/plan.md)
+
+## 5) Implementación
+
+El desarrollador:
+
+1. crea rama `feature/<task_id>-<slug>`
+2. implementa por tareas del plan
+3. deja commits claros
+4. prepara el pack para review
 
 Consulta el cerebro para arquitectura y estilo.
 
-## 4) Sub-agentes revisores (contexto limpio)
+## 6) Revisión en paralelo
 
-Lanza en paralelo, cada uno sin contaminar al otro:
+Tres revisores con contexto limpio:
 
 | Revisor | Mira |
 |---------|------|
-| Seguridad | vulnerabilidades, secretos, auth, inyecciones |
-| UX | flujo, pasos, claridad para el avatar de usuario |
-| UI | consistencia visual, estados, accesibilidad básica |
-| Código | arquitectura, estándares, duplicados, claridad |
+| **Lógica** | corrección funcional, edge cases, consistencia |
+| **Seguridad** | auth, secretos, inyecciones, permisos |
+| **Rendimiento** | consultas, N+1, bloqueos, coste |
 
-Idealmente usa **familias/modelos distintos** al builder para reducir sesgo de auto-revisión.
+Opcional (extra): UX / UI si el cambio es de producto visible.
 
-## 5) Aprobador
+## 7) Pruebas
 
-Recibe los 4 feedbacks:
+Un **agente de pruebas distinto** al desarrollador:
 
-- si hay FAIL → reenvía al builder con lista de correcciones
-- si todo PASS → avanza
+- valida escenarios reales
+- ejecuta lint / tests / CI
+- no “aprueba” código solo porque lo escribió el builder
 
-Bucle hasta convergencia o hasta límite de intentos (p. ej. 3).
+## 8) Riesgo y salida
 
-## 6) Clasificador de riesgo + hooks
+| Resultado | Acción |
+|-----------|--------|
+| Reviews + tests OK y riesgo bajo | auto-merge / deploy |
+| Riesgo alto | gate humano |
+| FAIL | volver a plan/build con hallazgos |
 
-No confíes solo en “el modelo dice que es safe”.
+## Ejemplo práctico: de la petición al pull request
 
-Añade **código/hooks** que bloqueen caminos peligrosos:
-
-- cambios en migraciones DB
-- auth / pagos / permisos
-- infra / secretos
-- archivos críticos
-
-| Riesgo | Acción |
-|--------|--------|
-| Bajo | merge + deploy automático |
-| Alto | notificar humano + esperar OK |
-
-## 7) Paralelismo
-
-Cada tarea es independiente:
-
-- su ID
-- su rama
-- sus logs
-- su estado (`queued|spec|building|review|waiting_human|done|failed`)
-
-Así la factory escala como una línea de producción real.
+1. Entra “añadir descuento por volumen”
+2. Spec define criterios
+3. Plan crea T1/T2/T3
+4. Developer abre `feature/...`
+5. Revisores miran lógica, seguridad y rendimiento a la vez
+6. Agente de pruebas valida con lint/CI y escenarios
+7. Sale el PR listo

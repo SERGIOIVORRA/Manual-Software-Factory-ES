@@ -31,51 +31,54 @@ Elige 1–2 fuentes:
 
 Todo se convierte en `task_id` + payload estándar.
 
-## Fase 3 — Spec Writer
+## Fase 3 — Orquestador
 
-Implementa un agente/job que:
+Define estados y cola:
 
-1. recibe la tarea
-2. lee cerebro
-3. escribe `specs/<task_id>.md`
-4. falla si faltan criterios de aceptación
+`queued → specifying → planning → building → reviewing → testing → waiting_human → done|failed`
 
-No dejes que el builder invente alcance.
+Sin orquestador, vuelves al chat manual.
 
-## Fase 4 — Builder con TDD
+## Fase 4 — Especificación + Planificación
+
+1. Agente de especificación → `specs/<task_id>.md`
+2. Agente planificador → `plans/<task_id>.md` con T1/T2/T3
+3. Falla si faltan criterios de aceptación o tareas verificables
+
+No dejes que el desarrollador invente alcance.
+
+## Fase 5 — Desarrollador
 
 Reglas mínimas:
 
-- rama por tarea
-- tests primero
+- rama `feature/<task_id>-...`
+- implementa por tareas del plan
 - CI obligatorio
-- no merge sin tests verdes
+- no merge sin pruebas verdes
 
-## Fase 5 — Revisores
+## Fase 6 — Revisores en paralelo
 
-Monta 4 jobs/agentes:
+Monta al menos:
 
-1. seguridad
-2. UX
-3. UI
-4. code review
+1. lógica
+2. seguridad
+3. rendimiento
 
 Cada uno:
 
 - contexto limpio
 - prompt corto y específico
-- salida estructurada: `PASS|FAIL` + lista de hallazgos
+- salida `PASS|FAIL` + hallazgos
 
-## Fase 6 — Aprobador y bucle
+## Fase 7 — Agente de pruebas (separado)
 
-Si hay FAIL:
+Debe ser **distinto** del desarrollador:
 
-- agrupa hallazgos
-- reabre builder
-- incrementa `attempt`
-- corta a N intentos y escala a humano
+- escenarios reales
+- lint / tests / CI
+- no autoaprobar el código del builder
 
-## Fase 7 — Clasificación de riesgo
+## Fase 8 — Clasificación de riesgo
 
 Combina:
 
@@ -85,7 +88,7 @@ Combina:
 
 Hooks duros > promesas del modelo.
 
-## Fase 8 — Canales no técnicos
+## Fase 9 — Canales no técnicos
 
 Cuando el núcleo funcione, abre la puerta a:
 
@@ -95,7 +98,7 @@ Cuando el núcleo funcione, abre la puerta a:
 
 Ellos lanzan; la factory decide si necesita desarrollador.
 
-## Fase 9 — Observabilidad de la factory
+## Fase 10 — Observabilidad de la factory
 
 Mide:
 

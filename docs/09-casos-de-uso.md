@@ -1,75 +1,59 @@
 # 09 — Casos de uso
 
-## 1) Autofix de errores de producción
+## 1) De la petición al pull request
 
-**Entrada:** evento de error (stack trace, URL, entorno)  
-**Salida:** PR o deploy (según riesgo)
+Flujo canónico del manual:
 
-Flujo típico:
+1. Entra petición / bug / ticket
+2. Spec
+3. Plan (T1, T2, T3)
+4. Developer en rama `feature/...`
+5. Reviews en paralelo: lógica, seguridad, rendimiento
+6. Agente de pruebas (lint + escenarios)
+7. PR
 
-1. Llega el error
-2. Spec Writer resume causa probable + plan de fix
-3. Builder reproduce con test + arregla
-4. Reviews (seguridad + código prioritarios)
-5. Si es pequeño → auto
-6. Si afecta core → humano
+## 2) Autofix de errores de producción
 
-Beneficio: dejas de “apagar fuegos” a mano 24/7.
+**Entrada:** evento de error  
+**Salida:** PR o deploy según riesgo
 
-## 2) Issues / tickets de desarrollo
+Útil cuando el mismo tipo de fallo se repite y puede cerrarse con un proceso repetible.
 
-**Entrada:** issue con label `factory`  
-**Salida:** PR enlazado al issue
+## 3) Equipos no técnicos
 
-Buenos candidatos:
-
-- bugs acotados
-- mejoras pequeñas
-- deuda técnica localizada
-
-Malos candidatos al inicio:
-
-- rediseños totales
-- migraciones de plataforma
-- requisitos ambiguos sin dueño
-
-## 3) Equipos no técnicos (marketing / ventas / ops)
-
-**Entrada:** mensaje en Slack  
-**Salida:** cambio publicado o PR pendiente
+Marketing / ventas / ops lanzan peticiones (Slack o formulario).  
+La factory decide si puede ir automática o necesita humano.
 
 Ejemplos:
 
-- cambiar frase del hero
-- añadir bloque FAQ
-- actualizar aviso legal (con review humano)
-- crear landing simple
+- cambiar copy de landing
+- añadir FAQ
+- ajustar textos legales (con gate humano)
 
-La factory decide si necesita desarrollador.
+## 4) App a medida que reduce suscripciones
 
-## 4) Factory de contenido (mismo patrón, otro dominio)
+Ejemplo de valor de negocio:
 
-El patrón factory no es solo código:
+En lugar de pagar muchas apps sueltas (regalos, bundles, descuentos, upsell, etc.), la factory ayuda a construir **una solución a medida** que concentre módulos:
 
-```text
-audio/vídeo crudo
-  → cortar silencios
-  → limpiar errores
-  → unir
-  → transiciones / animaciones
-  → miniatura
-  → revisión humana
-  → publicar
-```
+- regalos automáticos
+- kits y packs
+- descuentos avanzados / por volumen
+- cupones y reglas
+- ofertas por mercado
+- automatizaciones
+- upsell / cross-sell
 
-Misma lógica: entrada → pasos auditables → salida.
+Resultado buscado:
 
-## 5) Mejoras internas del propio pipeline
+> **Una sola solución. Múltiples funcionalidades. Menos suscripciones.**
+
+No es “magia”: es industrializar el desarrollo de ese backend propio con roles y control de calidad.
+
+## 5) Mejoras del propio pipeline
 
 Usa la factory para:
 
-- mejorar prompts de roles
-- añadir checks al clasificador
-- generar reportes semanales de KPIs
-
-Cuando el sistema se mejora a sí mismo con control, empieza a escalar de verdad.
+- mejorar prompts de cada rol
+- endurecer límites del clasificador
+- reportar KPIs semanales (lead time, % auto-merge, reopens)

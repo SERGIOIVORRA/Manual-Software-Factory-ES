@@ -21,14 +21,15 @@ Marca cada ítem antes de dar la factory por “lista”.
 
 ## Pipeline
 
-- [ ] Input normalizado con `task_id`
-- [ ] Spec Writer operativo
-- [ ] Builder con TDD + rama por tarea
-- [ ] CI obligatorio en verde
-- [ ] Revisores: seguridad, UX, UI, código
-- [ ] Aprobador con bucle y límite de intentos
-- [ ] Clasificador de riesgo
-- [ ] Hooks duros en paths críticos
+- [ ] Input normalizado con `task_id` (petición / bug / ticket)
+- [ ] Orquestador con cola y estados
+- [ ] Agente de especificación
+- [ ] Agente planificador (T1, T2, T3…)
+- [ ] Agente desarrollador + rama por tarea
+- [ ] Revisores en paralelo: lógica, seguridad, rendimiento
+- [ ] Agente de pruebas **distinto** del desarrollador
+- [ ] CI / lint obligatorios en verde
+- [ ] Clasificador de riesgo + hooks en paths críticos
 - [ ] Ruta humana para HIGH
 
 ## Operación

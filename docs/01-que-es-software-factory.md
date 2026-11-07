@@ -2,50 +2,45 @@
 
 ## Definición práctica
 
-Una **Software Factory** es un sistema de producción de software donde:
+Una **Software Factory** es un sistema donde:
 
-- el trabajo **entra** por un canal único (o pocos canales estandarizados),
-- atraviesa **pasos definidos** (código, agentes, humanos),
-- y **sale** como entregable listo (código, PR, deploy, artefacto),
-- dejando **trazabilidad** en cada etapa.
+- entra una **petición**, un **bug** o un **ticket**,
+- un **orquestador** coordina una cola de trabajo,
+- distintos **agentes con roles** ejecutan pasos del proceso,
+- y sale un entregable (rama, PR, deploy) con **trazas auditables**.
 
-No es “abrir un chat con un agente y ver qué pasa”.  
-Es **delegar un proceso completo** que puede seguir funcionando aunque tú no estés mirando.
+No es “abrir un chat y ver qué pasa”.  
+Es **dirigir un equipo de agentes** con reglas y límites.
 
-## Analogía: fábrica de coches
+## El modelo de hoy vs la factory
 
-En una fábrica real:
+| Modelo de hoy | Software Factory |
+|---------------|------------------|
+| Un solo agente | Varios roles especializados |
+| Tú en medio de cada ciclo | Orquestación del proceso |
+| pedir → revisar → corregir → repetir | especificar → planificar → implementar → revisar → probar |
+| Contexto improvisado | Cerebro persistente del proyecto |
+| Autovalidación fácil | Separación builder / revisores / pruebas |
 
-1. Entra materia prima (acero)
-2. Distintas máquinas transforman piezas
-3. Hay operadores y controles de calidad
-4. Sale un coche
+## Analogía rápida
 
-Si una máquina falla, el fallo se propaga. Por eso cada etapa debe ser:
+Como en una fábrica real:
 
-- **revisable**
-- **detectable**
-- **corregible**
+1. Entra materia prima (la petición)
+2. Distintas estaciones transforman el trabajo
+3. Hay controles de calidad
+4. Sale un producto
 
-En software pasa igual: un spec malo genera código malo; un review flojo deja bugs; un deploy sin filtro puede tumbar producción.
+Si una estación falla, debe detectarse **antes** de que el fallo se arrastre.
 
-## De “yo chateo” a “yo diseño el sistema”
+## Qué NO es
 
-| Antes (chat) | Ahora (factory) |
-|--------------|-----------------|
-| Tú lanzas cada prompt | El sistema recibe inputs solo |
-| Tú eres el orquestador | La orquestación está definida |
-| El contexto vive en tu cabeza | El contexto vive en el cerebro |
-| Revisas a mano cada cosa | Revisores (agentes/humanos) en pipeline |
-| Un solo hilo | Muchas tareas en paralelo |
+- Un chatbot con memoria larga
+- Un agente único que lo hace todo
+- Un CI sin roles ni reglas de negocio
+- Un flujo sin límites ni auditoría
 
-## Qué NO es una Software Factory
+## Frase guía
 
-- Un script suelto sin logs
-- Un agente sin memoria del proyecto
-- Un CI que solo “compila y ya”
-- Un flujo que no se puede auditar cuando falla
-
-## Idea central
-
-> Factory = proceso **repetible** + **auditable** + con **inteligencia** donde aporta, y **código** donde debe ser determinista.
+> El próximo salto no es solo programar *con* IA.  
+> Es **dirigir equipos de agentes**.

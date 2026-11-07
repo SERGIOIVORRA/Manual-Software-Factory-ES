@@ -1,75 +1,74 @@
 # 02 — Principios clave
 
-## 1. Repetible
+## 1. Roles, reglas y límites
 
-La misma clase de tarea debe seguir **siempre el mismo camino**.
+Dentro de la factory siempre hay tres cosas:
 
-Ejemplo:
+| Pilar | Pregunta que responde |
+|-------|------------------------|
+| **Rol** | ¿Quién hace qué? |
+| **Reglas** | ¿Cómo debe hacerlo y qué formato entrega? |
+| **Límites** | ¿Qué no puede hacer sin gate humano? |
 
-- Bug de producción → Spec → Builder → Reviews → Riesgo → Deploy
-- Cambio cosmético de landing → Spec corta → Builder → Riesgo bajo → Deploy auto
+Sin límites, no hay fábrica: hay automatismos peligrosos.
 
-Si cada persona inventa un flujo distinto, no hay fábrica: hay improvisación.
+## 2. Repetible
 
-## 2. Auditable
+La misma clase de tarea sigue el mismo camino cada vez.
 
-Cada paso debe dejar rastro de:
+## 3. Auditable
 
-| Campo | Ejemplo |
-|-------|---------|
-| ID de tarea | `TASK-1042` |
-| Input | Issue #88 / error Sentry `abc123` |
-| Spec generada | `specs/TASK-1042.md` |
-| Rama | `factory/TASK-1042-fix-login` |
-| Resultados de review | seguridad OK, UX FAIL, UI OK, code OK |
-| Decisión | devolver a builder / pedir humano / merge |
-| Artefacto final | PR #120 / commit `a1b2c3` |
+Cada paso deja rastro:
 
-Sin auditoría no puedes mejorar el sistema cuando falla.
+- `task_id`
+- input original
+- spec / plan
+- rama
+- resultados de review
+- resultado de pruebas
+- decisión final (auto / humano / rechazo)
 
-## 3. Contexto persistente (cerebro)
+## 4. Contexto persistente (cerebro)
 
-Si el agente no conoce:
+Antes de especificar, planificar o implementar, se consulta el cerebro del proyecto.
 
-- stack (Postgres vs MySQL),
-- arquitectura,
-- reglas de negocio,
-- estilo de código,
-- decisiones previas,
+## 5. Separación de responsabilidades
 
-…alucina o inventa caminos incompatibles.
-
-El cerebro es la memoria continua del proyecto. **Antes de escribir, se consulta.**
-
-## 4. Separación de responsabilidades
-
-No uses el mismo “cerebro mental” para:
+No uses el mismo agente para:
 
 - escribir el código, y
-- validar si ese código es seguro / bueno en UX / bueno en UI
+- escribir/aprobar sus propios tests sin contraste
 
-Mejor: **builder** + **revisores con contexto limpio** + modelos distintos cuando aporte independencia.
+Si un agente se revisa a sí mismo, **se da la razón a sí mismo**.
 
-## 5. Human-in-the-loop solo cuando aporta
+Mejor:
 
-No todo necesita humano.  
-No todo puede ir automático.
+- desarrollador
+- revisores (lógica / seguridad / rendimiento)
+- agente de pruebas distinto
+- humano en cambios críticos
 
-Clasifica por riesgo:
+## 6. La generación supera a la revisión
 
-- cosmético / copy / no-core → automático
+Se genera más rápido de lo que se revisa.  
+Por eso la factory necesita:
+
+- revisores en paralelo
+- pruebas automáticas
+- gates de riesgo
+
+Si no, acumulas código sin control.
+
+## 7. Orquestación
+
+Hay un orquestador (cola + estados + coordinación).  
+No improvisas el orden de los pasos en cada chat.
+
+## 8. Human-in-the-loop solo cuando aporta
+
+- cosmético / no-core → automático
 - DB / auth / pagos / core → humano
 
-## 6. Paralelismo
+## 9. Regla de frecuencia
 
-La fábrica no es una cola de una sola pieza.  
-Puedes lanzar muchas tareas a la vez si cada una tiene:
-
-- ID propio
-- rama propia
-- logs propios
-- estado propio
-
-## 7. Regla de frecuencia
-
-Si lo haces **más de una vez por semana** y tiene entrada/salida claras → candidata a factory.
+Si lo haces más de una vez por semana y tiene entrada/salida claras → candidata a factory.
