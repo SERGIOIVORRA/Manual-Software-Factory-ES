@@ -1,36 +1,10 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="320" viewBox="0 0 1200 320" role="img">
-  <defs>
-    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0%" stop-color="#111318"/>
-      <stop offset="100%" stop-color="#1a1510"/>
-    </linearGradient>
-    <linearGradient id="gold" x1="0" y1="0" x2="1" y2="0">
-      <stop offset="0%" stop-color="#c9922a"/>
-      <stop offset="100%" stop-color="#f0c56a"/>
-    </linearGradient>
-  </defs>
-  <rect width="1200" height="320" rx="24" fill="url(#bg)"/>
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="320" viewBox="0 0 1200 320">
+  <rect width="1200" height="320" rx="24" fill="#111318"/>
   <circle cx="980" cy="60" r="120" fill="#e6a23c" opacity="0.08"/>
-  <circle cx="80" cy="280" r="90" fill="#e6a23c" opacity="0.06"/>
-
-  <text x="64" y="78" fill="#f0c56a" font-family="Georgia, Times New Roman, serif" font-size="18" letter-spacing="6">SOFTWARE FACTORY</text>
-  <text x="64" y="150" fill="#f5f1e8" font-family="Georgia, Times New Roman, serif" font-size="52" font-weight="700">Dejar de chatear.</text>
-  <text x="64" y="210" fill="url(#gold)" font-family="Georgia, Times New Roman, serif" font-size="52" font-weight="700">Empezar a orquestar.</text>
-  <text x="64" y="268" fill="#9a958a" font-family="Segoe UI, Arial" font-size="18">El modelo visual · sin receta · solo la idea</text>
-
-  <!-- mini gear -->
-  <g transform="translate(980,160)">
-    <circle r="46" fill="none" stroke="#f0c56a" stroke-width="3" opacity="0.9"/>
-    <circle r="18" fill="#f0c56a" opacity="0.85"/>
-    <g stroke="#f0c56a" stroke-width="10" stroke-linecap="round" opacity="0.85">
-      <line x1="0" y1="-58" x2="0" y2="-46"/>
-      <line x1="0" y1="46" x2="0" y2="58"/>
-      <line x1="-58" y1="0" x2="-46" y2="0"/>
-      <line x1="46" y1="0" x2="58" y2="0"/>
-      <line x1="-41" y1="-41" x2="-33" y2="-33"/>
-      <line x1="33" y1="33" x2="41" y2="41"/>
-      <line x1="41" y1="-41" x2="33" y2="-33"/>
-      <line x1="-33" y1="33" x2="-41" y2="41"/>
-    </g>
-  </g>
+  <text x="64" y="78" fill="#f0c56a" font-family="Segoe UI, Arial" font-size="18" letter-spacing="6">SOFTWARE FACTORY</text>
+  <text x="64" y="150" fill="#f5f1e8" font-family="Georgia, serif" font-size="52" font-weight="700">Dejar de chatear.</text>
+  <text x="64" y="210" fill="#f0c56a" font-family="Georgia, serif" font-size="52" font-weight="700">Empezar a orquestar.</text>
+  <text x="64" y="268" fill="#9a958a" font-family="Segoe UI, Arial" font-size="18">El modelo visual - solo la idea</text>
+  <circle cx="980" cy="160" r="46" fill="none" stroke="#f0c56a" stroke-width="3"/>
+  <circle cx="980" cy="160" r="18" fill="#f0c56a"/>
 </svg>

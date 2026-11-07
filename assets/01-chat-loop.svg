@@ -1,27 +1,15 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="420" viewBox="0 0 1200 420" role="img">
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="420" viewBox="0 0 1200 420">
   <rect width="1200" height="420" rx="24" fill="#111318"/>
-  <text x="48" y="52" fill="#f0c56a" font-family="Segoe UI, Arial" font-size="15" letter-spacing="4">01 — EL PROBLEMA</text>
-  <text x="48" y="96" fill="#f5f1e8" font-family="Georgia, Times New Roman, serif" font-size="34" font-weight="700">Tú en medio del chat. Para siempre.</text>
-
-  <!-- left column bubbles -->
+  <text x="48" y="52" fill="#f0c56a" font-family="Segoe UI, Arial" font-size="15" letter-spacing="4">01 - EL PROBLEMA</text>
+  <text x="48" y="96" fill="#f5f1e8" font-family="Georgia, serif" font-size="34" font-weight="700">Tu en medio del chat. Para siempre.</text>
   <rect x="48" y="140" width="280" height="56" rx="18" fill="#2a3344"/>
-  <text x="72" y="175" fill="#fff" font-family="Segoe UI, Arial" font-size="18">tú ? haz esto…</text>
-
+  <text x="72" y="175" fill="#fff" font-family="Segoe UI, Arial" font-size="18">tu: haz esto...</text>
   <rect x="120" y="216" width="300" height="56" rx="18" fill="#1c212b" stroke="#333947"/>
-  <text x="144" y="251" fill="#a8b0bf" font-family="Segoe UI, Arial" font-size="18">agente ? ¿y esto otro?</text>
-
+  <text x="144" y="251" fill="#a8b0bf" font-family="Segoe UI, Arial" font-size="18">agente: y esto otro?</text>
   <rect x="48" y="292" width="260" height="56" rx="18" fill="#2a3344"/>
-  <text x="72" y="327" fill="#fff" font-family="Segoe UI, Arial" font-size="18">tú ? corrige otra vez…</text>
-
-  <!-- arrows cycle -->
-  <path d="M420 180 C520 120, 620 120, 720 180" fill="none" stroke="#ff6b4a" stroke-width="4" stroke-dasharray="10 8"/>
-  <path d="M720 260 C620 320, 520 320, 420 260" fill="none" stroke="#ff6b4a" stroke-width="4" stroke-dasharray="10 8"/>
-  <polygon points="720,180 705,168 708,185" fill="#ff6b4a"/>
-  <polygon points="420,260 435,272 432,255" fill="#ff6b4a"/>
-
-  <!-- infinity badge -->
+  <text x="72" y="327" fill="#fff" font-family="Segoe UI, Arial" font-size="18">tu: corrige otra vez...</text>
   <circle cx="960" cy="230" r="88" fill="#2a1818" stroke="#ff6b4a" stroke-width="3"/>
-  <text x="960" y="220" text-anchor="middle" fill="#ff6b4a" font-family="Georgia, serif" font-size="64" font-weight="700">?</text>
-  <text x="960" y="258" text-anchor="middle" fill="#ffb4a4" font-family="Segoe UI, Arial" font-size="16" letter-spacing="3">LOOP</text>
-  <text x="960" y="360" text-anchor="middle" fill="#9a958a" font-family="Segoe UI, Arial" font-size="16">sin salida · sin roles · sin rastro</text>
+  <text x="960" y="245" text-anchor="middle" fill="#ff6b4a" font-family="Georgia, serif" font-size="64" font-weight="700">8</text>
+  <text x="960" y="280" text-anchor="middle" fill="#ffb4a4" font-family="Segoe UI, Arial" font-size="16">LOOP</text>
+  <text x="600" y="390" text-anchor="middle" fill="#9a958a" font-family="Segoe UI, Arial" font-size="16">sin salida - sin roles - sin rastro</text>
 </svg>

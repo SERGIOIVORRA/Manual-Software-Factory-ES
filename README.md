@@ -1,22 +1,22 @@
 # Software Factory
 
-![Software Factory](./assets/hero.svg)
+![Software Factory](./assets/hero.png)
 
 ---
 
-![El problema](./assets/01-chat-loop.svg)
+![El problema](./assets/01-chat-loop.png)
 
 ---
 
-![El salto](./assets/04-salto.svg)
+![El salto](./assets/04-salto.png)
 
 ---
 
-![La fábrica](./assets/02-pipeline.svg)
+![La fabrica](./assets/02-pipeline.png)
 
 ---
 
-![Roles](./assets/03-roles.svg)
+![Roles](./assets/03-roles.png)
 
 ---
 
@@ -24,8 +24,8 @@
 
 ```mermaid
 flowchart LR
-  A[Ruta rápida] --> OK[Entrega]
-  B[Ruta crítica] --> H{Humano}
+  A[Ruta rapida] --> OK[Entrega]
+  B[Ruta critica] --> H{Humano}
   H -->|ok| OK
   H -->|no| R[Rehacer]
   R --> B
