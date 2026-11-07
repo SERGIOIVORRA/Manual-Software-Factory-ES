@@ -1,14 +1,15 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="920" height="180" viewBox="0 0 920 180" role="img" aria-label="De chatear a orquestar">
-  <rect width="920" height="180" rx="20" fill="#0c0d0f"/>
-  <text x="40" y="42" fill="#8a867c" font-family="Segoe UI, Arial" font-size="14" letter-spacing="2">EL SALTO</text>
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="300" viewBox="0 0 1200 300" role="img">
+  <rect width="1200" height="300" rx="24" fill="#111318"/>
+  <text x="48" y="52" fill="#f0c56a" font-family="Segoe UI, Arial" font-size="15" letter-spacing="4">04 — EL SALTO</text>
+  <text x="48" y="96" fill="#f5f1e8" font-family="Georgia, Times New Roman, serif" font-size="34" font-weight="700">Mismo agente. Otro sistema.</text>
 
-  <rect x="80" y="70" width="260" height="70" rx="16" fill="#3a2a2a" stroke="#ff6b4a"/>
-  <text x="210" y="112" text-anchor="middle" fill="#fff" font-family="Segoe UI, Arial" font-size="22" font-weight="700">Chatear</text>
+  <rect x="80" y="140" width="360" height="100" rx="22" fill="#2a1818" stroke="#ff6b4a" stroke-width="3"/>
+  <text x="260" y="185" text-anchor="middle" fill="#ffb4a4" font-family="Segoe UI, Arial" font-size="16" letter-spacing="2">ANTES</text>
+  <text x="260" y="220" text-anchor="middle" fill="#fff" font-family="Georgia, serif" font-size="32" font-weight="700">Chatear</text>
 
-  <polygon points="400,105 430,90 430,100 500,100 500,110 430,110 430,120" fill="#e6a23c">
-    <animateTransform attributeName="transform" type="translate" values="0 0; 12 0; 0 0" dur="1.2s" repeatCount="indefinite"/>
-  </polygon>
+  <text x="600" y="205" text-anchor="middle" fill="#f0c56a" font-family="Segoe UI, Arial" font-size="42" font-weight="700">→</text>
 
-  <rect x="560" y="70" width="280" height="70" rx="16" fill="#2a3a2a" stroke="#3dd68c"/>
-  <text x="700" y="112" text-anchor="middle" fill="#fff" font-family="Segoe UI, Arial" font-size="22" font-weight="700">Orquestar</text>
+  <rect x="760" y="140" width="360" height="100" rx="22" fill="#15241c" stroke="#3dd68c" stroke-width="3"/>
+  <text x="940" y="185" text-anchor="middle" fill="#9be7c0" font-family="Segoe UI, Arial" font-size="16" letter-spacing="2">DESPUÉS</text>
+  <text x="940" y="220" text-anchor="middle" fill="#fff" font-family="Georgia, serif" font-size="32" font-weight="700">Orquestar</text>
 </svg>
