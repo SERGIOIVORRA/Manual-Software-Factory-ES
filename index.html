@@ -4,382 +4,642 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Software Factory — idea</title>
-  <meta name="description" content="La idea: dejar de chatear con un agente y dirigir un equipo orquestado." />
+  <meta name="description" content="Dejar de chatear con un agente. Empezar a orquestar una fábrica." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700&family=Syne:wght@500;600;700;800&display=swap" rel="stylesheet" />
   <style>
     :root {
-      --bg: #0c0d0f;
-      --ink: #e8e4d9;
-      --muted: #8a867c;
-      --line: #2a2c31;
-      --accent: #e6a23c;
-      --ok: #3dd68c;
-      --warn: #ff6b4a;
+      --bg: #0a0c10;
+      --ink: #f2eee4;
+      --muted: #8b918c;
+      --line: #243028;
+      --accent: #c8f055;
+      --accent-2: #5eead4;
+      --warn: #ff7a59;
+      --panel: #10151a;
     }
+
     * { box-sizing: border-box; margin: 0; padding: 0; }
-    html, body {
+    html { scroll-behavior: smooth; }
+    body {
       min-height: 100%;
-      background:
-        radial-gradient(1200px 600px at 10% -10%, #1a1712 0%, transparent 55%),
-        radial-gradient(900px 500px at 100% 0%, #121820 0%, transparent 50%),
-        var(--bg);
       color: var(--ink);
-      font-family: "Segoe UI", ui-sans-serif, system-ui, sans-serif;
+      font-family: Syne, sans-serif;
+      background: var(--bg);
+      overflow-x: hidden;
+    }
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      background:
+        radial-gradient(900px 520px at 12% -8%, rgba(200, 240, 85, 0.14), transparent 55%),
+        radial-gradient(800px 480px at 92% 8%, rgba(94, 234, 212, 0.1), transparent 50%),
+        radial-gradient(700px 500px at 50% 110%, rgba(255, 122, 89, 0.08), transparent 45%),
+        linear-gradient(180deg, #0a0c10 0%, #0d1210 50%, #0a0c10 100%);
+    }
+    canvas#noise {
+      position: fixed;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 1;
+      opacity: 0.045;
+      mix-blend-mode: overlay;
     }
     .wrap {
-      max-width: 980px;
+      position: relative;
+      z-index: 2;
+      max-width: 1100px;
       margin: 0 auto;
-      padding: 48px 20px 80px;
+      padding: 0 22px 96px;
     }
-    header {
-      text-align: center;
-      margin-bottom: 48px;
-      animation: rise .8s ease both;
+
+    /* HERO */
+    .hero {
+      min-height: 100vh;
+      display: grid;
+      align-content: center;
+      gap: 22px;
+      padding: 72px 0 48px;
     }
     .brand {
-      letter-spacing: .28em;
-      text-transform: uppercase;
       font-size: 12px;
+      letter-spacing: 0.34em;
+      text-transform: uppercase;
       color: var(--accent);
-      margin-bottom: 14px;
+      font-weight: 700;
     }
     h1 {
-      font-size: clamp(28px, 5vw, 44px);
-      font-weight: 650;
-      letter-spacing: -0.03em;
-      line-height: 1.15;
+      font-family: Fraunces, Georgia, serif;
+      font-size: clamp(42px, 9vw, 92px);
+      font-weight: 700;
+      line-height: 0.95;
+      letter-spacing: -0.04em;
+      max-width: 11ch;
     }
-    h1 span { color: var(--muted); font-weight: 450; }
-    .sub {
-      margin-top: 14px;
+    h1 em {
+      font-style: italic;
+      color: var(--accent);
+      font-weight: 500;
+    }
+    .hero-sub {
       color: var(--muted);
-      font-size: 15px;
+      font-size: clamp(15px, 2.2vw, 18px);
+      max-width: 34ch;
+      line-height: 1.45;
+      font-weight: 500;
+    }
+    .hero-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      margin-top: 8px;
+      color: var(--ink);
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 14px;
+      letter-spacing: 0.04em;
+    }
+    .hero-cta span {
+      width: 36px;
+      height: 36px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      display: grid;
+      place-items: center;
+      transition: transform .3s ease, background .3s ease;
+    }
+    .hero-cta:hover span {
+      transform: translateY(4px);
+      background: rgba(200, 240, 85, 0.12);
     }
 
-    /* BEFORE / AFTER */
+    section {
+      padding: 72px 0 24px;
+    }
+    .kicker {
+      font-size: 12px;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: var(--accent-2);
+      font-weight: 700;
+      margin-bottom: 14px;
+    }
+    h2 {
+      font-family: Fraunces, Georgia, serif;
+      font-size: clamp(28px, 5vw, 48px);
+      line-height: 1.05;
+      letter-spacing: -0.03em;
+      margin-bottom: 28px;
+      max-width: 16ch;
+    }
+    h2 em { font-style: italic; color: var(--accent); font-weight: 500; }
+
+    /* COMPARE */
     .compare {
       display: grid;
-      grid-template-columns: 1fr auto 1fr;
-      gap: 16px;
+      grid-template-columns: 1fr 64px 1fr;
+      gap: 18px;
       align-items: stretch;
-      margin: 40px 0 56px;
-      animation: rise .9s .1s ease both;
     }
-    @media (max-width: 760px) {
+    @media (max-width: 800px) {
       .compare { grid-template-columns: 1fr; }
-      .arrow { transform: rotate(90deg); margin: 4px auto; }
+      .vs { transform: rotate(90deg); margin: 4px auto; }
     }
-    .card {
+    .panel {
+      background: color-mix(in srgb, var(--panel) 92%, black);
       border: 1px solid var(--line);
-      background: rgba(255,255,255,.02);
-      border-radius: 18px;
-      padding: 18px;
-      overflow: hidden;
+      border-radius: 28px;
+      padding: 22px;
+      min-height: 280px;
       position: relative;
+      overflow: hidden;
+      backdrop-filter: blur(8px);
     }
-    .card h2 {
-      font-size: 13px;
-      letter-spacing: .12em;
+    .panel .label {
+      font-size: 12px;
+      letter-spacing: 0.2em;
       text-transform: uppercase;
       color: var(--muted);
-      margin-bottom: 16px;
+      margin-bottom: 18px;
+      font-weight: 700;
     }
-    .arrow {
+    .vs {
       align-self: center;
+      justify-self: center;
+      width: 48px;
+      height: 48px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      display: grid;
+      place-items: center;
       color: var(--accent);
-      font-size: 28px;
-      animation: pulse 1.8s ease-in-out infinite;
+      font-weight: 800;
+      background: #11160f;
     }
-
-    /* Chat mess animation */
     .chat {
       display: flex;
       flex-direction: column;
       gap: 10px;
-      min-height: 210px;
+      min-height: 200px;
     }
     .bubble {
       max-width: 88%;
-      padding: 10px 12px;
-      border-radius: 14px;
-      font-size: 13px;
+      padding: 11px 13px;
+      border-radius: 16px;
+      font-size: 14px;
       line-height: 1.35;
       opacity: 0;
-      animation: pop .5s ease forwards;
+      transform: translateY(12px);
     }
     .bubble.you {
       align-self: flex-end;
-      background: #243041;
+      background: #1c2730;
     }
     .bubble.bot {
       align-self: flex-start;
-      background: #1c1e22;
+      background: #151a1f;
       border: 1px solid var(--line);
       color: var(--muted);
     }
-    .bubble:nth-child(1) { animation-delay: .2s; }
-    .bubble:nth-child(2) { animation-delay: .7s; }
-    .bubble:nth-child(3) { animation-delay: 1.2s; }
-    .bubble:nth-child(4) { animation-delay: 1.7s; }
-    .loop {
+    .loop-badge {
       position: absolute;
-      right: 14px;
-      bottom: 12px;
-      font-size: 11px;
+      right: 18px;
+      bottom: 16px;
       color: var(--warn);
-      letter-spacing: .08em;
+      font-size: 11px;
+      letter-spacing: 0.16em;
       text-transform: uppercase;
-      animation: blink 1.4s step-end infinite;
+      font-weight: 800;
     }
-
-    /* Factory pipeline */
-    .factory h2 {
-      text-align: center;
-      font-size: 13px;
-      letter-spacing: .16em;
-      text-transform: uppercase;
-      color: var(--muted);
-      margin-bottom: 22px;
-      animation: rise .8s .2s ease both;
-    }
-    .rail {
-      position: relative;
-      display: grid;
-      grid-template-columns: repeat(6, 1fr);
-      gap: 10px;
-      margin-bottom: 18px;
-      animation: rise .9s .25s ease both;
-    }
-    @media (max-width: 760px) {
-      .rail { grid-template-columns: repeat(3, 1fr); }
-    }
-    .rail::before {
-      content: "";
-      position: absolute;
-      left: 4%;
-      right: 4%;
-      top: 28px;
-      height: 2px;
-      background: linear-gradient(90deg, transparent, var(--accent), transparent);
-      opacity: .35;
-      animation: flow 2.8s linear infinite;
-      background-size: 200% 100%;
-    }
-    .node {
-      text-align: center;
-      position: relative;
-      z-index: 1;
-    }
-    .dot {
-      width: 56px;
-      height: 56px;
-      margin: 0 auto 10px;
-      border-radius: 16px;
-      border: 1px solid var(--line);
-      background: #14161a;
+    .factory-preview {
+      height: 200px;
       display: grid;
       place-items: center;
-      font-size: 20px;
-      box-shadow: 0 0 0 0 rgba(230,162,60,.35);
-      animation: ping 2.4s ease-out infinite;
+      gap: 10px;
+      text-align: center;
     }
-    .node:nth-child(1) .dot { animation-delay: 0s; }
-    .node:nth-child(2) .dot { animation-delay: .35s; }
-    .node:nth-child(3) .dot { animation-delay: .7s; }
-    .node:nth-child(4) .dot { animation-delay: 1.05s; }
-    .node:nth-child(5) .dot { animation-delay: 1.4s; }
-    .node:nth-child(6) .dot { animation-delay: 1.75s; }
-    .node strong {
-      display: block;
-      font-size: 12px;
-      font-weight: 600;
+    .orbit {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      border: 1px dashed color-mix(in srgb, var(--accent) 45%, transparent);
+      display: grid;
+      place-items: center;
+      position: relative;
     }
-    .node span {
+    .orbit::before {
+      content: "";
+      position: absolute;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--accent);
+      top: -5px;
+      left: 50%;
+      margin-left: -5px;
+      transform-origin: 5px 65px;
+      animation: spin 3.2s linear infinite;
+    }
+    .orbit strong {
+      font-family: Fraunces, serif;
+      font-size: 28px;
+      color: var(--accent);
+    }
+    .factory-preview p { color: var(--muted); font-size: 13px; }
+
+    /* PIPELINE SVG */
+    .pipeline-wrap {
+      border: 1px solid var(--line);
+      border-radius: 28px;
+      background: linear-gradient(160deg, #101610, #0d1214 60%, #12100e);
+      padding: 28px 18px 18px;
+      overflow: hidden;
+    }
+    .pipeline-svg {
+      width: 100%;
+      height: auto;
       display: block;
+    }
+    .pipe-node rect {
+      fill: #151c16;
+      stroke: #314034;
+      stroke-width: 1.5;
+    }
+    .pipe-node text {
+      fill: var(--ink);
+      font-family: Syne, sans-serif;
+      font-size: 13px;
+      font-weight: 700;
+    }
+    .pipe-node .sub {
+      fill: var(--muted);
       font-size: 11px;
-      color: var(--muted);
-      margin-top: 2px;
+      font-weight: 500;
+    }
+    .pipe-edge {
+      fill: none;
+      stroke: var(--accent);
+      stroke-width: 2.5;
+      stroke-linecap: round;
+      opacity: 0.85;
+    }
+    .tracer {
+      fill: var(--accent-2);
+      filter: drop-shadow(0 0 6px rgba(94, 234, 212, 0.8));
     }
 
+    /* ROLES */
     .roles {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
-      gap: 12px;
-      margin-top: 28px;
-      animation: rise .9s .35s ease both;
+      gap: 14px;
     }
-    @media (max-width: 760px) {
+    @media (max-width: 800px) {
       .roles { grid-template-columns: 1fr 1fr; }
     }
     .role {
       border: 1px solid var(--line);
-      border-radius: 16px;
-      padding: 16px 12px;
-      text-align: center;
-      background: rgba(255,255,255,.02);
-      transition: transform .25s ease, border-color .25s ease;
+      border-radius: 22px;
+      padding: 20px 16px;
+      background: rgba(16, 21, 26, 0.85);
+      min-height: 150px;
+      opacity: 0;
+      transform: translateY(24px);
     }
-    .role:hover {
-      transform: translateY(-4px);
-      border-color: #4a4030;
+    .role .n {
+      width: 34px;
+      height: 34px;
+      border-radius: 10px;
+      background: var(--accent);
+      color: #111;
+      display: grid;
+      place-items: center;
+      font-weight: 800;
+      margin-bottom: 14px;
     }
-    .role .ico {
-      font-size: 22px;
-      margin-bottom: 8px;
+    .role b {
       display: block;
+      font-size: 18px;
+      margin-bottom: 8px;
     }
-    .role b { font-size: 13px; }
     .role p {
-      margin-top: 6px;
-      font-size: 11px;
       color: var(--muted);
-      line-height: 1.35;
+      font-size: 13px;
+      line-height: 1.4;
+      font-weight: 500;
     }
 
-    .idea {
-      margin-top: 56px;
+    /* MERMAID */
+    .diagram {
+      border: 1px solid var(--line);
+      border-radius: 28px;
+      padding: 24px 12px;
+      background: #0e1310;
+      overflow-x: auto;
+    }
+    .diagram .mermaid {
+      display: flex;
+      justify-content: center;
+    }
+
+    .closer {
       text-align: center;
-      animation: rise .9s .45s ease both;
+      padding: 96px 0 24px;
     }
-    .idea p {
-      font-size: clamp(18px, 3vw, 26px);
-      letter-spacing: -0.02em;
-      max-width: 16em;
+    .closer p {
+      font-family: Fraunces, serif;
+      font-size: clamp(28px, 5vw, 52px);
+      letter-spacing: -0.03em;
+      line-height: 1.1;
+      max-width: 14ch;
       margin: 0 auto;
-      line-height: 1.35;
     }
-    .idea em {
-      font-style: normal;
+    .closer em {
+      font-style: italic;
       color: var(--accent);
+      font-weight: 500;
     }
     footer {
       margin-top: 48px;
       text-align: center;
       color: var(--muted);
       font-size: 12px;
+      letter-spacing: 0.04em;
     }
 
-    @keyframes rise {
-      from { opacity: 0; transform: translateY(14px); }
-      to { opacity: 1; transform: none; }
+    .reveal { opacity: 0; transform: translateY(28px); }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
     }
-    @keyframes pop {
-      from { opacity: 0; transform: translateY(8px) scale(.98); }
-      to { opacity: 1; transform: none; }
-    }
-    @keyframes pulse {
-      0%, 100% { opacity: .55; transform: translateX(0); }
-      50% { opacity: 1; transform: translateX(4px); }
-    }
-    @keyframes blink {
-      50% { opacity: 0; }
-    }
-    @keyframes ping {
-      0% { box-shadow: 0 0 0 0 rgba(230,162,60,.35); }
-      70% { box-shadow: 0 0 0 14px rgba(230,162,60,0); }
-      100% { box-shadow: 0 0 0 0 rgba(230,162,60,0); }
-    }
-    @keyframes flow {
-      from { background-position: 0 0; }
-      to { background-position: 200% 0; }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation: none !important;
+        transition: none !important;
+      }
+      .reveal, .bubble, .role { opacity: 1 !important; transform: none !important; }
     }
   </style>
 </head>
 <body>
+  <canvas id="noise" aria-hidden="true"></canvas>
   <div class="wrap">
-    <header>
-      <div class="brand">Software Factory</div>
-      <h1>No es un chat mejor.<br /><span>Es una fábrica.</span></h1>
-      <p class="sub">Idea visual · sin receta · solo el modelo</p>
+    <header class="hero">
+      <div class="brand reveal">Software Factory</div>
+      <h1 class="reveal">No es un chat mejor.<br /><em>Es una fábrica.</em></h1>
+      <p class="hero-sub reveal">La idea: dejar de pegar mensajes a un agente y pasar a dirigir un sistema orquestado.</p>
+      <a class="hero-cta reveal" href="#problema">
+        Ver el salto
+        <span aria-hidden="true">↓</span>
+      </a>
     </header>
 
-    <section class="compare" aria-label="Antes y después">
-      <article class="card">
-        <h2>Hoy</h2>
-        <div class="chat">
-          <div class="bubble you">haz esto…</div>
-          <div class="bubble bot">vale, ¿y esto?</div>
-          <div class="bubble you">corrige…</div>
-          <div class="bubble bot">otra vez…</div>
-        </div>
-        <div class="loop">tú en medio ∞</div>
-      </article>
-
-      <div class="arrow" aria-hidden="true">→</div>
-
-      <article class="card">
-        <h2>Factory</h2>
-        <div class="chat" style="justify-content:center;align-items:center;min-height:210px">
-          <div style="font-size:42px;animation:pulse 2s ease-in-out infinite">⚙️</div>
-          <div style="margin-top:10px;font-size:14px;color:var(--ok)">petición → entregable</div>
-          <div style="margin-top:6px;font-size:12px;color:var(--muted)">tú diriges · no pegas</div>
-        </div>
-      </article>
+    <section id="problema">
+      <div class="kicker reveal">01 — El problema</div>
+      <h2 class="reveal">Tú en medio.<br /><em>Para siempre.</em></h2>
+      <div class="compare">
+        <article class="panel reveal" id="chat-panel">
+          <div class="label">Hoy</div>
+          <div class="chat" id="chat">
+            <div class="bubble you">haz esto…</div>
+            <div class="bubble bot">vale, ¿y esto otro?</div>
+            <div class="bubble you">corrige otra vez…</div>
+            <div class="bubble bot">otra ronda…</div>
+          </div>
+          <div class="loop-badge">tú en medio ∞</div>
+        </article>
+        <div class="vs reveal" aria-hidden="true">→</div>
+        <article class="panel reveal">
+          <div class="label">Factory</div>
+          <div class="factory-preview">
+            <div class="orbit"><strong>SF</strong></div>
+            <p>petición → entregable<br />tú diriges · no pegas</p>
+          </div>
+        </article>
+      </div>
     </section>
 
-    <section class="factory" aria-label="Pipeline">
-      <h2>El flujo</h2>
-      <div class="rail">
-        <div class="node">
-          <div class="dot">1</div>
-          <strong>Entrada</strong>
-          <span>idea / bug</span>
-        </div>
-        <div class="node">
-          <div class="dot">2</div>
-          <strong>Spec</strong>
-          <span>qué</span>
-        </div>
-        <div class="node">
-          <div class="dot">3</div>
-          <strong>Plan</strong>
-          <span>cómo</span>
-        </div>
-        <div class="node">
-          <div class="dot">4</div>
-          <strong>Build</strong>
-          <span>hacer</span>
-        </div>
-        <div class="node">
-          <div class="dot">5</div>
-          <strong>Review</strong>
-          <span>mirar</span>
-        </div>
-        <div class="node">
-          <div class="dot">6</div>
-          <strong>Out</strong>
-          <span>listo</span>
-        </div>
+    <section id="flujo">
+      <div class="kicker reveal">02 — El flujo</div>
+      <h2 class="reveal">Una línea. Seis estaciones.</h2>
+      <div class="pipeline-wrap reveal">
+        <svg class="pipeline-svg" viewBox="0 0 1000 180" role="img" aria-label="Pipeline de la fábrica">
+          <path id="pipe-path" class="pipe-edge" d="M90 70 H210 H330 H450 H570 H690 H810" />
+          <g class="pipe-node" transform="translate(40,40)">
+            <rect width="100" height="70" rx="16" />
+            <text x="50" y="32" text-anchor="middle">Entrada</text>
+            <text class="sub" x="50" y="50" text-anchor="middle">idea / bug</text>
+          </g>
+          <g class="pipe-node" transform="translate(160,40)">
+            <rect width="100" height="70" rx="16" />
+            <text x="50" y="32" text-anchor="middle">Spec</text>
+            <text class="sub" x="50" y="50" text-anchor="middle">qué</text>
+          </g>
+          <g class="pipe-node" transform="translate(280,40)">
+            <rect width="100" height="70" rx="16" />
+            <text x="50" y="32" text-anchor="middle">Plan</text>
+            <text class="sub" x="50" y="50" text-anchor="middle">cómo</text>
+          </g>
+          <g class="pipe-node" transform="translate(400,40)">
+            <rect width="100" height="70" rx="16" />
+            <text x="50" y="32" text-anchor="middle">Build</text>
+            <text class="sub" x="50" y="50" text-anchor="middle">hacer</text>
+          </g>
+          <g class="pipe-node" transform="translate(520,40)">
+            <rect width="100" height="70" rx="16" />
+            <text x="50" y="32" text-anchor="middle">Review</text>
+            <text class="sub" x="50" y="50" text-anchor="middle">mirar</text>
+          </g>
+          <g class="pipe-node" transform="translate(640,40)">
+            <rect width="100" height="70" rx="16" />
+            <text x="50" y="32" text-anchor="middle">Out</text>
+            <text class="sub" x="50" y="50" text-anchor="middle">listo</text>
+          </g>
+          <circle class="tracer" r="6" cx="90" cy="70" />
+        </svg>
       </div>
+    </section>
 
+    <section id="roles">
+      <div class="kicker reveal">03 — Piezas</div>
+      <h2 class="reveal">Cuatro piezas. Cero misterio.</h2>
       <div class="roles">
-        <div class="role">
-          <span class="ico">🧠</span>
+        <article class="role">
+          <div class="n">1</div>
           <b>Contexto</b>
-          <p>memoria del proyecto</p>
-        </div>
-        <div class="role">
-          <span class="ico">👷</span>
+          <p>Memoria viva del proyecto. No se reexplica cada vez.</p>
+        </article>
+        <article class="role">
+          <div class="n">2</div>
           <b>Roles</b>
-          <p>cada agente un oficio</p>
-        </div>
-        <div class="role">
-          <span class="ico">🚦</span>
+          <p>Cada agente un oficio. No un todólogo.</p>
+        </article>
+        <article class="role">
+          <div class="n">3</div>
           <b>Gates</b>
-          <p>humano solo donde importa</p>
-        </div>
-        <div class="role">
-          <span class="ico">📋</span>
+          <p>Humano solo donde la decisión importa.</p>
+        </article>
+        <article class="role">
+          <div class="n">4</div>
           <b>Rastro</b>
-          <p>todo auditable</p>
-        </div>
+          <p>Todo auditable. Nada se esfuma en el chat.</p>
+        </article>
       </div>
     </section>
 
-    <section class="idea">
-      <p>Dejar de <em>chatear</em>.<br />Empezar a <em>orquestar</em>.</p>
+    <section id="gates">
+      <div class="kicker reveal">04 — Gates</div>
+      <h2 class="reveal">Rápido o crítico. Tú eliges el freno.</h2>
+      <div class="diagram reveal">
+        <pre class="mermaid">
+flowchart LR
+  A[Ruta rápida] --> OK[Entrega]
+  B[Ruta crítica] --> H{Humano}
+  H -->|ok| OK
+  H -->|no| R[Rehacer]
+  R --> B
+  style A fill:#151c16,stroke:#c8f055,color:#f2eee4
+  style B fill:#151c16,stroke:#5eead4,color:#f2eee4
+  style H fill:#1a1512,stroke:#ff7a59,color:#f2eee4
+  style OK fill:#13251c,stroke:#c8f055,color:#f2eee4
+  style R fill:#1a1512,stroke:#ff7a59,color:#f2eee4
+        </pre>
+      </div>
     </section>
 
-    <footer>Concepto visual · el método completo no vive aquí</footer>
+    <section class="closer">
+      <p class="reveal">Dejar de <em>chatear</em>. Empezar a <em>orquestar</em>.</p>
+      <footer>Concepto visual · el método completo no vive aquí · animado con GSAP + Mermaid</footer>
+    </section>
   </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/MotionPathPlugin.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
+  <script>
+    (function () {
+      const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+      // Film grain
+      const canvas = document.getElementById('noise');
+      const ctx = canvas.getContext('2d');
+      function resizeNoise() {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+      }
+      function paintNoise() {
+        const { width, height } = canvas;
+        const image = ctx.createImageData(width, height);
+        const data = image.data;
+        for (let i = 0; i < data.length; i += 4) {
+          const v = (Math.random() * 255) | 0;
+          data[i] = data[i + 1] = data[i + 2] = v;
+          data[i + 3] = 28;
+        }
+        ctx.putImageData(image, 0, 0);
+      }
+      resizeNoise();
+      paintNoise();
+      window.addEventListener('resize', () => { resizeNoise(); paintNoise(); });
+      if (!reduce) setInterval(paintNoise, 120);
+
+      mermaid.initialize({
+        startOnLoad: true,
+        theme: 'dark',
+        securityLevel: 'loose',
+        flowchart: { curve: 'basis', padding: 16 }
+      });
+
+      if (reduce || !window.gsap) {
+        document.querySelectorAll('.reveal, .bubble, .role').forEach((el) => {
+          el.style.opacity = '1';
+          el.style.transform = 'none';
+        });
+        return;
+      }
+
+      gsap.registerPlugin(ScrollTrigger, MotionPathPlugin);
+
+      gsap.utils.toArray('.reveal').forEach((el) => {
+        gsap.to(el, {
+          opacity: 1,
+          y: 0,
+          duration: 0.85,
+          ease: 'power3.out',
+          scrollTrigger: {
+            trigger: el,
+            start: 'top 88%',
+            once: true
+          }
+        });
+      });
+
+      // Chat bubbles loop feel
+      const bubbles = gsap.utils.toArray('#chat .bubble');
+      const chatTl = gsap.timeline({
+        repeat: -1,
+        repeatDelay: 0.8,
+        scrollTrigger: {
+          trigger: '#chat-panel',
+          start: 'top 75%',
+          toggleActions: 'play pause resume pause'
+        }
+      });
+      bubbles.forEach((b, i) => {
+        chatTl.to(b, { opacity: 1, y: 0, duration: 0.35, ease: 'power2.out' }, i * 0.45);
+      });
+      chatTl.to(bubbles, { opacity: 0.15, duration: 0.4 }, '+=0.9');
+      chatTl.set(bubbles, { opacity: 0, y: 12 });
+
+      // Roles stagger
+      gsap.to('.role', {
+        opacity: 1,
+        y: 0,
+        duration: 0.7,
+        stagger: 0.12,
+        ease: 'power3.out',
+        scrollTrigger: {
+          trigger: '.roles',
+          start: 'top 80%',
+          once: true
+        }
+      });
+
+      // Pipeline draw + tracer
+      const path = document.getElementById('pipe-path');
+      const len = path.getTotalLength();
+      gsap.set(path, { strokeDasharray: len, strokeDashoffset: len });
+      gsap.set('.pipe-node', { opacity: 0, y: 12 });
+
+      const pipeTl = gsap.timeline({
+        scrollTrigger: {
+          trigger: '.pipeline-wrap',
+          start: 'top 70%',
+          once: true
+        }
+      });
+      pipeTl.to(path, { strokeDashoffset: 0, duration: 1.6, ease: 'power2.inOut' });
+      pipeTl.to('.pipe-node', { opacity: 1, y: 0, stagger: 0.12, duration: 0.45 }, 0.2);
+      pipeTl.to('.tracer', {
+        duration: 2.4,
+        repeat: -1,
+        ease: 'none',
+        motionPath: {
+          path: '#pipe-path',
+          align: '#pipe-path',
+          alignOrigin: [0.5, 0.5],
+          autoRotate: false
+        }
+      }, 1.2);
+    })();
+  </script>
 </body>
 </html>
