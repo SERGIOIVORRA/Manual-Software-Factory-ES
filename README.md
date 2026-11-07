@@ -2,11 +2,11 @@
 
 ![Software Factory](https://capsule-render.vercel.app/api?type=waving&height=240&color=0:0A0C10,100:1A2418&text=Software%20Factory&fontSize=70&fontColor=C8F055&animation=twinkling&fontAlignY=38&desc=dejar%20de%20chatear%20·%20empezar%20a%20orquestar&descAlignY=60&descSize=18&descColor=A8B09E)
 
-[![Typing SVG](https://readme-typing-svg.demolab.com?font=Fraunces&weight=600&size=26&duration=3200&pause=900&color=C8F055&center=true&vCenter=true&width=720&height=55&lines=No+es+un+chat+mejor.;Es+una+f%C3%A1brica.;T%C3%BA+diriges.+No+pegas.)](https://github.com/DenverCoder1/readme-typing-svg)
+[![Typing SVG](https://readme-typing-svg.herokuapp.com?font=Fira+Code&size=26&duration=3200&pause=900&color=C8F055&center=true&vCenter=true&width=720&height=55&lines=No+es+un+chat+mejor.;Es+una+fabrica.;Tu+diriges.+No+pegas.)](https://github.com/DenverCoder1/readme-typing-svg)
 
 ![idea](https://img.shields.io/badge/idea-visual-c8f055?style=for-the-badge&labelColor=0a0c10)
-![sin receta](https://img.shields.io/badge/método-no%20aquí-ff7a59?style=for-the-badge&labelColor=0a0c10)
-![modelo](https://img.badges.ws/badge?label=modelo&value=orquestar&color=5eead4&labelColor=0a0c10&style=for-the-badge&animation=shine)
+![sin receta](https://img.shields.io/badge/metodo-no%20aqui-ff7a59?style=for-the-badge&labelColor=0a0c10)
+![modelo](https://badges.ws/badge?label=modelo&value=orquestar&color=5eead4&labelColor=0a0c10&style=for-the-badge&animation=shine)
 
 </div>
 
