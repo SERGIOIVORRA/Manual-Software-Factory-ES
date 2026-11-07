@@ -1,14 +1,15 @@
 # Software Factory
 
-La idea se entiende mejor **viendo el video**:
+> GitHub no deja reproducir MP4 dentro del README. El video se ve aqui:
 
-https://github.com/SERGIOIVORRA/Manual-Software-Factory-ES/raw/main/assets/software-factory-explicacion.mp4
+## [▶ Ver la explicacion (video)](https://sergioivorra.github.io/Manual-Software-Factory-ES/ver.html)
 
-<video src="assets/software-factory-explicacion.mp4" controls preload="metadata" width="720">
-  Tu navegador no reproduce el video aqui.
-</video>
+[![Ver video Software Factory](./assets/video-poster.jpg)](https://sergioivorra.github.io/Manual-Software-Factory-ES/ver.html)
 
-**[Reproducir / descargar](./assets/software-factory-explicacion.mp4)** · Idea visual del modelo. No es el metodo completo.
+**[Abrir reproductor](https://sergioivorra.github.io/Manual-Software-Factory-ES/ver.html)** ·
+**[Descargar MP4](./assets/software-factory-explicacion.mp4)**
+
+Idea visual del modelo. No es el metodo completo.
 
 ---
 
