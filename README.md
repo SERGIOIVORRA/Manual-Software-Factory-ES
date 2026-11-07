@@ -1,22 +1,14 @@
 # Software Factory
 
-<div align="center">
+Idea visual del modelo. No es el metodo completo.
 
-![Software Factory](./assets/hero.png)
-
-[![Typing SVG](https://readme-typing-svg.herokuapp.com?font=Fira+Code&size=22&duration=3000&pause=1000&color=58A6FF&center=true&vCenter=true&width=640&height=40&lines=Dejar+de+chatear.;Empezar+a+orquestar.)](https://github.com/DenverCoder1/readme-typing-svg)
-
-Idea visual del modelo. **No es el metodo completo.**
-
-</div>
+**Dejar de chatear → empezar a orquestar.**
 
 ---
 
 ## 1. El problema
 
 Hoy el humano esta en medio del chat. Sin salida.
-
-![El problema](./assets/01-chat-loop.png)
 
 ```mermaid
 flowchart TD
@@ -32,8 +24,6 @@ flowchart TD
 
 Mismo tipo de agente. Otro sistema.
 
-![El salto](./assets/04-salto.png)
-
 ```mermaid
 flowchart LR
   A[Chatear] -->|salto| B[Orquestar]
@@ -45,8 +35,6 @@ flowchart LR
 ## 3. La fabrica
 
 La peticion entra. El entregable sale.
-
-![La fabrica](./assets/02-pipeline.png)
 
 ```mermaid
 flowchart LR
@@ -61,14 +49,12 @@ flowchart LR
 
 ## 4. Piezas
 
-![Roles](./assets/03-roles.png)
-
 | Pieza | Que hace |
 | --- | --- |
-| **Contexto** | memoria del proyecto |
-| **Roles** | cada agente un oficio |
-| **Gates** | humano donde importa |
-| **Rastro** | todo auditable |
+| Contexto | memoria del proyecto |
+| Roles | cada agente un oficio |
+| Gates | humano donde importa |
+| Rastro | todo auditable |
 
 ---
 
@@ -82,11 +68,3 @@ flowchart LR
   H -->|no| X[Rehacer]
   X --> B
 ```
-
----
-
-<div align="center">
-
-**Dejar de chatear → empezar a orquestar.**
-
-</div>
