@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8"/>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:wght@400;500;600;700&display=swap');
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:#0a0b0d;color:#f4efe6;font-family:'DM Sans',system-ui,sans-serif}
+  .board{
+    width:1200px;height:420px;margin:24px;padding:40px 48px;
+    border-radius:28px;position:relative;overflow:hidden;
+    background:
+      radial-gradient(900px 420px at 100% 0%, rgba(240,197,106,.12), transparent 55%),
+      radial-gradient(700px 380px at 0% 100%, rgba(61,214,140,.08), transparent 50%),
+      linear-gradient(160deg,#12151c 0%,#0e1015 55%,#16120e 100%);
+    border:1px solid #2a2e38;
+  }
+  .kicker{font-size:13px;letter-spacing:.28em;text-transform:uppercase;color:#f0c56a;font-weight:600;margin-bottom:12px}
+  h1{font-family:'Instrument Serif',Georgia,serif;font-size:42px;font-weight:400;letter-spacing:-.02em;line-height:1.1;margin-bottom:28px}
+  h1 em{font-style:italic;color:#f0c56a}
+  .row{display:flex;gap:18px;align-items:stretch}
+  .pill{
+    flex:1;border-radius:18px;padding:18px 16px;background:rgba(255,255,255,.03);
+    border:1px solid #323744;text-align:center;position:relative
+  }
+  .pill .n{display:inline-grid;place-items:center;width:34px;height:34px;border-radius:999px;background:#f0c56a;color:#111;font-weight:700;margin-bottom:10px}
+  .pill b{display:block;font-size:18px;margin-bottom:4px}
+  .pill span{color:#9aa1ae;font-size:13px}
+  .arrow{
+    align-self:center;color:#f0c56a;font-size:28px;font-weight:700;flex:0 0 auto
+  }
+  .chat{display:flex;flex-direction:column;gap:12px;max-width:420px}
+  .bubble{padding:14px 16px;border-radius:16px;font-size:16px;width:fit-content;max-width:90%}
+  .you{align-self:flex-end;background:#2a3548}
+  .bot{align-self:flex-start;background:#1a1f29;border:1px solid #323744;color:#aeb6c5}
+  .badge{
+    position:absolute;right:56px;top:140px;width:160px;height:160px;border-radius:50%;
+    border:3px solid #ff6b4a;display:grid;place-items:center;background:#2a1515
+  }
+  .badge strong{font-family:'Instrument Serif',serif;font-size:64px;color:#ff6b4a;line-height:1}
+  .badge small{color:#ffb4a4;letter-spacing:.2em;font-size:12px}
+  .split{display:grid;grid-template-columns:1fr 80px 1fr;gap:12px;align-items:center}
+  .box{
+    border-radius:22px;padding:28px 20px;text-align:center;border:2px solid
+  }
+  .bad{background:#2a1515;border-color:#ff6b4a}
+  .good{background:#13251c;border-color:#3dd68c}
+  .box .l{font-size:12px;letter-spacing:.2em;margin-bottom:8px}
+  .box .t{font-family:'Instrument Serif',serif;font-size:36px}
+  .hub{
+    width:140px;height:140px;border-radius:50%;margin:0 auto 18px;
+    display:grid;place-items:center;border:2px solid #f0c56a;background:#241c12
+  }
+  .grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+  .card{border:1px solid #323744;border-radius:18px;padding:18px;background:rgba(255,255,255,.03);text-align:center}
+  .card b{display:block;font-size:18px;margin-bottom:6px}
+  .card span{color:#9aa1ae;font-size:13px}
+  .tiny{position:absolute;left:48px;bottom:28px;color:#7f8694;font-size:13px}
+</style>
+</head>
+<body>
+
+<section class="board" id="hero">
+  <div class="kicker">Software Factory</div>
+  <h1 style="font-size:56px;max-width:14ch;margin-top:20px">Dejar de chatear.<br/><em>Empezar a orquestar.</em></h1>
+  <p class="tiny">Modelo visual · sin receta · solo la idea</p>
+</section>
+
+<section class="board" id="problema">
+  <div class="kicker">01 — El problema</div>
+  <h1>Tú en medio del chat. <em>Para siempre.</em></h1>
+  <div class="chat">
+    <div class="bubble you">tú → haz esto…</div>
+    <div class="bubble bot">agente → ¿y esto otro?</div>
+    <div class="bubble you">tú → corrige otra vez…</div>
+  </div>
+  <div class="badge"><div><strong>∞</strong><div><small>LOOP</small></div></div>
+  <p class="tiny">sin roles · sin rastro · sin salida</p>
+</section>
+
+<section class="board" id="salto">
+  <div class="kicker">02 — El salto</div>
+  <h1>Mismo agente. <em>Otro sistema.</em></h1>
+  <div class="split">
+    <div class="box bad"><div class="l" style="color:#ffb4a4">ANTES</div><div class="t">Chatear</div></div>
+    <div style="text-align:center;font-size:42px;color:#f0c56a">→</div>
+    <div class="box good"><div class="l" style="color:#9be7c0">DESPUÉS</div><div class="t">Orquestar</div></div>
+  </div>
+</section>
+
+<section class="board" id="pipeline">
+  <div class="kicker">03 — La fábrica</div>
+  <h1>Petición entra. <em>Entregable sale.</em></h1>
+  <div class="row">
+    <div class="pill"><div class="n">1</div><b>Entrada</b><span>idea / bug</span></div>
+    <div class="arrow">→</div>
+    <div class="pill"><div class="n">2</div><b>Spec</b><span>qué</span></div>
+    <div class="arrow">→</div>
+    <div class="pill"><div class="n">3</div><b>Plan</b><span>cómo</span></div>
+    <div class="arrow">→</div>
+    <div class="pill"><div class="n">4</div><b>Build</b><span>hacer</span></div>
+    <div class="arrow">→</div>
+    <div class="pill"><div class="n">5</div><b>Review</b><span>mirar</span></div>
+    <div class="arrow">→</div>
+    <div class="pill" style="border-color:#3dd68c"><div class="n" style="background:#3dd68c">6</div><b>Out</b><span>listo</span></div>
+  </div>
+  <p class="tiny">tú diriges el carril · no pegas cada mensaje</p>
+</section>
+
+<section class="board" id="roles">
+  <div class="kicker">04 — Roles</div>
+  <h1>Cada agente, <em>un oficio.</em></h1>
+  <div class="hub"><div style="text-align:center"><b style="color:#f0c56a">CONTEXTO</b><div style="color:#9aa1ae;font-size:12px;margin-top:4px">memoria</div></div></div>
+  <div class="grid4">
+    <div class="card"><b>Spec</b><span>define el qué</span></div>
+    <div class="card"><b>Plan</b><span>ordena el cómo</span></div>
+    <div class="card"><b>Build</b><span>construye</span></div>
+    <div class="card"><b>Review</b><span>revisa / gate</span></div>
+  </div>
+</section>
+
+</body>
+</html>
