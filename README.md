@@ -13,7 +13,9 @@ Idea visual del modelo. No es el metodo completo.
 
 ---
 
-## Esquema 01 — Loop actual
+## Esquema 01 — El problema: tu en medio
+
+Hoy programas con IA como si fuera un chat: un solo agente y tu en el centro. Pedir, revisar, corregir, otra vez. No hay salida del loop.
 
 ```mermaid
 flowchart TD
@@ -23,7 +25,11 @@ flowchart TD
   A -->|corregir otra vez| U
 ```
 
-## Esquema 02 — Secuencia del chat
+---
+
+## Esquema 02 — Como se siente ese chat
+
+No falla la IA: falla el modelo. Cada mensaje te obliga a volver a meter contexto, criterio y decision.
 
 ```mermaid
 sequenceDiagram
@@ -36,7 +42,11 @@ sequenceDiagram
   T->>A: no, otra vez
 ```
 
-## Esquema 03 — El salto
+---
+
+## Esquema 03 — El salto de modelo
+
+El salto no es "un agente mejor". Es dejar de chatear y pasar a orquestar: peticion entra, entregable sale.
 
 ```mermaid
 flowchart LR
@@ -44,7 +54,11 @@ flowchart LR
   B --> C[Entregable]
 ```
 
-## Esquema 04 — Hoy vs Factory
+---
+
+## Esquema 04 — Hoy vs Software Factory
+
+Misma materia prima (agentes). Distinto sistema: tu dejas de ser el pegamento y pasas a dirigir.
 
 ```mermaid
 flowchart TB
@@ -61,7 +75,11 @@ flowchart TB
   HOY -->|cambio de modelo| FACTORY
 ```
 
-## Esquema 05 — Pipeline
+---
+
+## Esquema 05 — Que es una Software Factory
+
+No va de usar mas herramientas de IA. Va de un proceso con roles: spec, plan, build, review, entrega.
 
 ```mermaid
 flowchart LR
@@ -73,7 +91,11 @@ flowchart LR
   Review --> Entrega
 ```
 
-## Esquema 06 — Estados del flujo
+---
+
+## Esquema 06 — El flujo tiene estados
+
+Una factory no improvisa en el chat: avanza por estados. Si review falla, vuelve a build. Si pasa, entrega.
 
 ```mermaid
 stateDiagram-v2
@@ -87,7 +109,16 @@ stateDiagram-v2
   Entrega --> [*]
 ```
 
-## Esquema 07 — Piezas del sistema
+---
+
+## Esquema 07 — Las 4 piezas
+
+Sin estas piezas sigues en modo chat, aunque tengas 10 agentes.
+
+- **Contexto:** memoria del proyecto (no reexplicar cada vez)
+- **Roles:** cada agente un oficio
+- **Gates:** humano solo donde importa
+- **Rastro:** todo auditable
 
 ```mermaid
 flowchart TB
@@ -100,7 +131,11 @@ flowchart TB
   GAT --- RAS
 ```
 
-## Esquema 08 — Orquestador y agentes
+---
+
+## Esquema 08 — Roles especializados
+
+De la peticion al pull request: un agente especifica, otro planifica, otros implementan en paralelo, luego review.
 
 ```mermaid
 flowchart TD
@@ -115,7 +150,11 @@ flowchart TD
   R --> PR[Pull request]
 ```
 
-## Esquema 09 — Secuencia Factory
+---
+
+## Esquema 09 — Como habla el sistema
+
+Tu no pegas con cada agente. Hablas con el orquestador. El reparte trabajo y te devuelve un entregable.
 
 ```mermaid
 sequenceDiagram
@@ -137,7 +176,11 @@ sequenceDiagram
   O-->>U: entregable
 ```
 
-## Esquema 10 — De peticion a PR
+---
+
+## Esquema 10 — Camino completo a PR
+
+El objetivo no es "una respuesta bonita". Es una salida ingenieril: spec → plan → codigo → tests → review → PR.
 
 ```mermaid
 flowchart LR
@@ -149,7 +192,11 @@ flowchart LR
   F --> G[PR]
 ```
 
-## Esquema 11 — Spec / Plan / Build
+---
+
+## Esquema 11 — Que produce cada fase
+
+Spec define el que. Plan parte el trabajo. Build ejecuta en ramas aisladas con checks. Asi no se mezcla todo en un solo hilo de chat.
 
 ```mermaid
 flowchart TD
@@ -171,7 +218,11 @@ flowchart TD
   Spec --> Plan --> Build
 ```
 
-## Esquema 12 — Gates
+---
+
+## Esquema 12 — Gates: donde entra el humano
+
+No revisas todo. Ruta rapida si el riesgo es bajo. Ruta critica si el impacto es alto: ahi el humano decide.
 
 ```mermaid
 flowchart TD
@@ -184,7 +235,11 @@ flowchart TD
   Back --> C
 ```
 
-## Esquema 13 — Vista completa
+---
+
+## Esquema 13 — Vista completa del modelo
+
+Tu diriges. El orquestador coordina. El contexto sostiene. Los roles producen. El gate protege. El rastro queda.
 
 ```mermaid
 flowchart TB
@@ -205,4 +260,4 @@ flowchart TB
 
 ---
 
-**Pregunta:** programar con IA... o dirigir equipos de agentes?
+**Cierre:** programar con IA... o dirigir equipos de agentes?
